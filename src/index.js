@@ -1,56 +1,8 @@
-const express = require('express')
-require('./db/mongoose')
-const userRouter = require('./routers/user')
-const taskRouter = require('./routers/task')
-
-const app = express()
+const app  = require('./app')
 const port = process.env.PORT
 
-const multer = require('multer')
-const upload = multer({
-    dest: 'images',
-    limit: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(doc|docx)$/)) {
-            return cb(new Error('Please upload a Word document'))
-        }
-
-        cb(undefined, true)
 
 
-        // cb(new Error('File must be a pdf'))
-        // cb(undefined, true)
-        // cb(undefined, false)
-    }
-})
-
-
-app.post('/upload', upload.single('upload'), async (req, res) => {
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({error: error.message})
-})
-
-// app.use((req, res, next) => {
-//     if (req.method == "GET"){
-//         res.send('GET requests are disabled')
-//     } else {
-//         next()
-//     }
-// })
-
-
-// Maintainence mode 
-// app.use((req, res, next) => {
-//     res.status(503).send("The site is under maintainence") 
-// })
-
-app.use(express.json())
-
-app.use(userRouter)
-app.use(taskRouter)
 
 
 
@@ -103,3 +55,44 @@ app.listen(port, () => {
 
 // myFunction()
 
+
+// const multer = require('multer')
+// const upload = multer({
+//     dest: 'images',
+//     limit: {
+//         fileSize: 1000000
+//     },
+//     fileFilter(req, file, cb) {
+//         if (!file.originalname.match(/\.(doc|docx)$/)) {
+//             return cb(new Error('Please upload a Word document'))
+//         }
+
+//         cb(undefined, true)
+
+
+//         // cb(new Error('File must be a pdf'))
+//         // cb(undefined, true)
+//         // cb(undefined, false)
+//     }
+// })
+
+
+// app.post('/upload', upload.single('upload'), async (req, res) => {
+//     res.send()
+// }, (error, req, res, next) => {
+//     res.status(400).send({error: error.message})
+// })
+
+// app.use((req, res, next) => {
+//     if (req.method == "GET"){
+//         res.send('GET requests are disabled')
+//     } else {
+//         next()
+//     }
+// })
+
+
+// Maintainence mode 
+// app.use((req, res, next) => {
+//     res.status(503).send("The site is under maintainence") 
+// })
